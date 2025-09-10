@@ -1,11 +1,12 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const { Client } = require("@gradio/client");
+import express from "express";
+import bodyParser from "body-parser";
+import { Client } from "@gradio/client";
 
 const app = express();
 app.use(bodyParser.json());
 
-const mjQuality = "masterpiece, best quality, ultra-detailed, hyper realistic, 8k, cinematic lighting, volumetric light, sharp focus, intricate details, photorealistic, trending on artstation, award winning photography, have a good anatomy, have a good composition, look likes DALL E 3, look likes Midjourney, look likes WOMBO DREAM, support all art styles";
+const mjQuality =
+  "masterpiece, best quality, ultra-detailed, hyper realistic, 8k, cinematic lighting, volumetric light, sharp focus, intricate details, photorealistic, trending on artstation, award winning photography, good anatomy, good composition, looks like DALL E 3, looks like Midjourney, looks like WOMBO DREAM, support all art styles";
 
 app.post("/generate", async (req, res) => {
   const { prompt, negative } = req.body;
@@ -15,19 +16,21 @@ app.post("/generate", async (req, res) => {
     const client = await Client.connect("stabilityai/stable-diffusion");
     const result = await client.predict("/infer", {
       prompt: `${prompt || "Hello!!"}, ${mjQuality}`,
-      negative: negative || "low quality, error image, low image, super low quality, blurry, pixelated",
-      scale: 7
+      negative:
+        negative ||
+        "low quality, error image, low image, super low quality, blurry, pixelated",
+      scale: 7,
     });
     res.json({
       author: "Herza",
       status: 200,
-      data: result.data
+      data: result.data,
     });
   } catch (err) {
     res.json({
       author: "Herza",
       status: 500,
-      data: { error: err.message }
+      data: { error: err.message },
     });
   }
 });
