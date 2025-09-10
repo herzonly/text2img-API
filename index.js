@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const mjQuality =
-  "masterpiece, best quality, ultra-detailed, hyper realistic, 8k, cinematic lighting, volumetric light, sharp focus, intricate details, photorealistic, trending on artstation, award winning photography, good anatomy, good composition, looks like DALL E 3, looks like Midjourney, looks like WOMBO DREAM, support all art styles";
+  "masterpiece, best quality, cinematic lighting, volumetric light, sharp focus, trending on artstation, award winning photography, good anatomy, good composition, looks like DALL E 3, looks like Midjourney, looks like WOMBO DREAM, support all art styles";
 
 app.post("/generate", async (req, res) => {
   const { prompt, negative } = req.body;
@@ -19,7 +19,7 @@ app.post("/generate", async (req, res) => {
       negative:
         negative ||
         "low quality, error image, low image, super low quality, blurry, pixelated",
-      scale: 7,
+      scale: 9,
     });
     res.json({
       author: "Herza",
